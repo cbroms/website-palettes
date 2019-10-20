@@ -46,20 +46,23 @@ def remove_dupes_and_flatten(arr):
     flattened = [item for sublist in arr for item in sublist]
     return list(set(flattened))
 
-url = "https://spotify.com/"
-page = requests.get(url)
-soup = BeautifulSoup(page.content, 'html.parser')
-colors = []
+# get the css files from a page and extract the color values
+def get_page_colors(url):
+    page = requests.get(url)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    info = {"url": page.url.replace("?ref=producthunt", ""), "title": soup.find("title").text}
 
-for tag in soup.find_all('link', rel='stylesheet'):
-    css_url = tag['href']
-    if "http" not in css_url:
-        css_url = url + css_url
-    page = requests.get(css_url)
-    colors.append(extract_css_colors(page.text))
+    colors = []
+    for tag in soup.find_all('link', rel='stylesheet'):
+        css_url = tag['href']
+        if "http" not in css_url:
+            css_url = url + css_url
+        page = requests.get(css_url)
+        colors.append(extract_css_colors(page.text))
 
-for tag in soup.find_all('style'):
-    colors.append(extract_css_colors(tag.text))
+    for tag in soup.find_all('style'):
+        colors.append(extract_css_colors(tag.text))
 
-colors = remove_dupes_and_flatten(colors)
-print(colors)
+    colors = remove_dupes_and_flatten(colors)
+    print("Got colors for: {}".format(info["url"]))
+    return {"url": info["url"], "title": info["title"], "colors": colors}
