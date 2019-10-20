@@ -1,7 +1,7 @@
 import requests
 import re
 from colour import Color # pip install colour
-from bs4 import BeautifulSoup, SoupStrainer # pip install bs4
+from bs4 import BeautifulSoup # pip install bs4
 
 # find all valid css colors and convert to hex
 def extract_css_colors(css):
