@@ -4,8 +4,8 @@ from get_producthunt_urls import open_scroll_collect_posts, get_page_urls_from_p
 from get_ycombinator_urls import get_page_urls
 from save_data import create_save_json
 
-PRODUCTHUNT_NUM_SITES_TO_GET = 9
-YCOMBINATOR_NUM_SITES_TO_GET = 9
+PRODUCTHUNT_NUM_SITES_TO_GET = 400
+YCOMBINATOR_NUM_SITES_TO_GET = 400
 
 if __name__ == "__main__":
 
